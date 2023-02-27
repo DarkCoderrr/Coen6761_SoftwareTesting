@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Project.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">softwareTesting</a> &gt; <a href="index.source.html" class="el_package">com.project.softwareTesting</a> &gt; <span class="el_source">Project.java</span></div><h1>Project.java</h1><pre class="source lang-java linenums">package com.project.softwareTesting;
+
+
+
+import java.util.Scanner;
+
+<span class="fc" id="L7">public class Project {</span>
+
+	int N;
+	int[][] floor ;
+	int Xcoordinate;
+	int Ycoordinate;
+	String facing;
+	boolean pen;
+	String penValueString;
+<span class="fc" id="L16">	boolean movepen=true;</span>
+
+	public int getXcoordinate() { 
+<span class="fc" id="L19">		return Xcoordinate;</span>
+	}
+
+	public void setFacing(String facing) {
+<span class="fc" id="L23">		this.facing = facing;</span>
+<span class="fc" id="L24">	}</span>
+
+	public int getN() {
+<span class="fc" id="L27">		return N;</span>
+	}
+
+	public void setXcoordinate(int xcoordinate) {
+<span class="fc" id="L31">		Xcoordinate = xcoordinate;</span>
+<span class="fc" id="L32">	}</span>
+
+	public void setYcoordinate(int ycoordinate) {
+<span class="fc" id="L35">		Ycoordinate = ycoordinate;</span>
+<span class="fc" id="L36">	}</span>
+
+	public boolean penDown() {
+<span class="fc" id="L39">		this.pen = true;</span>
+<span class="fc" id="L40">		this.penValueString = &quot;Down&quot;;</span>
+<span class="fc" id="L41">		return true;</span>
+	}
+
+	public boolean penUp() {
+<span class="fc" id="L45">		this.pen = false;</span>
+<span class="fc" id="L46">		this.penValueString = &quot;UP&quot;;</span>
+<span class="fc" id="L47">		return false;</span>
+	}
+	 public void initialize(int newSize) {
+<span class="fc" id="L50">	        this.N = newSize;</span>
+<span class="fc" id="L51">	        this.floor = new int[N][N];</span>
+<span class="fc" id="L52">	        setXcoordinate(N-1);</span>
+<span class="fc" id="L53">	        setYcoordinate(0);</span>
+//	        this.Xcoordinate = N-1;
+//	        this.Ycoordinate = 0;
+<span class="fc" id="L56">	        penUp();</span>
+<span class="fc" id="L57">	        this.facing = &quot;North&quot;;</span>
+<span class="fc" id="L58">	    }</span>
+
+	public char InputCommand() {
+       
+<span class="fc" id="L62">	 char returncommand='X';</span>
+<span class="fc" id="L63">		Scanner objScanner = new Scanner(System.in);</span>
+<span class="fc" id="L64">		boolean running = true;</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		while(running==true){</span>
+<span class="fc" id="L66">			System.out.print(&quot;Enter one of the above Command : &quot;);</span>
+			
+<span class="fc" id="L68">			String inputCommandString = objScanner.nextLine();</span>
+<span class="fc" id="L69">			char command = inputCommandString.charAt(0);</span>
+<span class="fc" id="L70">			returncommand=command;</span>
+			
+<span class="pc bpc" id="L72" title="9 of 10 branches missed.">			switch (command) {</span>
+            case 'U':
+            case 'u':
+<span class="nc" id="L75">                penUp(); </span>
+<span class="nc" id="L76">                break;</span>
+            case 'D':
+            case 'd':
+<span class="nc" id="L79">                penDown();</span>
+<span class="nc" id="L80">                break;</span>
+            case 'R':
+            case 'r':
+<span class="nc" id="L83">            	turnRight();            	</span>
+<span class="nc" id="L84">                break;</span>
+            case 'L':
+            case 'l':
+<span class="nc" id="L87">            	turnLeft();</span>
+<span class="nc" id="L88">                break;</span>
+            case 'M':
+            case 'm':
+<span class="nc" id="L91">                String[] parts = inputCommandString.split(&quot; &quot;);</span>
+<span class="nc" id="L92">                int distance = Integer.parseInt(parts[1]);</span>
+<span class="nc" id="L93">                moveForwardBackward(distance);</span>
+<span class="nc" id="L94">                break;</span>
+            case 'P':
+            case 'p':
+<span class="nc" id="L97">            	print();</span>
+<span class="nc" id="L98">                break;</span>
+            case 'C':
+            case 'c':
+<span class="nc" id="L101">            	PrintCurrentLocation();</span>
+<span class="nc" id="L102">                break;</span>
+            case 'I':
+            case 'i':
+<span class="nc" id="L105">                String[] sizeParts = inputCommandString.split(&quot; &quot;);</span>
+<span class="nc" id="L106">                int newSize = Integer.parseInt(sizeParts[1]);</span>
+<span class="nc" id="L107">                initialize(newSize);</span>
+<span class="nc" id="L108">                break;</span>
+            case 'Q':
+            case 'q':
+<span class="fc" id="L111">                running = false;</span>
+<span class="fc" id="L112">                break;</span>
+            default:
+<span class="nc" id="L114">                System.out.println(&quot;Invalid command&quot;);</span>
+                break;
+        }
+	
+<span class="fc" id="L118">		}</span>
+<span class="fc" id="L119">		objScanner.close();</span>
+<span class="fc" id="L120">		return returncommand;</span>
+	}
+	
+	public int[] PrintCurrentLocation() {
+<span class="fc" id="L124">		int coordinates[] = new int[2];</span>
+<span class="fc" id="L125">		int updatedX=this.N-Xcoordinate-1;</span>
+<span class="fc" id="L126">		coordinates[0] = updatedX;</span>
+<span class="fc" id="L127">		coordinates[1] = Ycoordinate;</span>
+<span class="fc" id="L128">		System.out.println(&quot;&gt;Position: &quot; + updatedX + &quot; , &quot; + Ycoordinate + &quot;- Pen: &quot; + penValueString</span>
+				+ &quot; - Facing: &quot; + facing);
+<span class="fc" id="L130">		return coordinates;</span>
+
+	}
+
+	public boolean BoundaryConditiion(int distance) {
+<span class="pc bpc" id="L135" title="3 of 16 branches missed.">		if ((this.facing==&quot;East&quot; &amp;&amp; (this.Ycoordinate + distance &lt; this.N))</span>
+				|| (this.facing==&quot;West&quot;&amp;&amp; (this.Ycoordinate - distance &gt;= 0))
+				|| (this.facing==&quot;North&quot; &amp;&amp; (this.Xcoordinate - distance &gt;= 0))
+				|| (this.facing==&quot;South&quot; &amp;&amp; (this.Xcoordinate + distance &lt; this.N)))
+
+		{
+<span class="fc" id="L141">			this.movepen=true;</span>
+<span class="fc" id="L142">			return movepen;</span>
+		} else {
+<span class="fc" id="L144">			this.movepen=false;</span>
+<span class="fc" id="L145">			return movepen;</span>
+		}
+
+	}
+
+	public String getFacing() {
+<span class="fc" id="L151">		return facing;</span>
+	}
+
+	public void turnRight() {
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (this.facing==&quot;North&quot;) {</span>
+<span class="fc" id="L156">			setFacing(&quot;East&quot;);</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		} else if (this.facing==&quot;East&quot;) {</span>
+<span class="fc" id="L158">			setFacing(&quot;South&quot;);</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		} else if (this.facing==&quot;South&quot;) {</span>
+<span class="fc" id="L160">			setFacing(&quot;West&quot;);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		} else if (this.facing==&quot;West&quot;) {</span>
+<span class="nc" id="L162">			setFacing(&quot;North&quot;);</span>
+		}
+
+<span class="fc" id="L165">	}</span>
+
+
+	public void turnLeft() {
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (this.facing==&quot;North&quot;) {</span>
+<span class="fc" id="L170">			setFacing(&quot;West&quot;);</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		} else if (this.facing==&quot;West&quot;) {</span>
+<span class="nc" id="L172">			setFacing(&quot;South&quot;);</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		} else if (this.facing==&quot;South&quot;) {</span>
+<span class="nc" id="L174">			setFacing(&quot;East&quot;);</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		} else if (this.facing==&quot;East&quot;) {</span>
+<span class="fc" id="L176">			setFacing(&quot;North&quot;);</span>
+		}
+
+<span class="fc" id="L179">	}</span>
+
+
+	
+	 public void moveForwardBackward(int distance) {
+<span class="fc" id="L184">		 BoundaryConditiion(distance);		 </span>
+<span class="pc bpc" id="L185" title="1 of 5 branches missed.">	        switch (this.facing) {</span>
+	            case &quot;North&quot;:
+<span class="pc bpc" id="L187" title="1 of 4 branches missed.">	                if (this.pen &amp;&amp; movepen) {</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">	                    for (int i = 1; i &lt;= distance; i++) {</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">	                        if (this.Xcoordinate - i &gt;= 0) {</span>
+<span class="fc" id="L190">	                            this.floor[this.Xcoordinate -i][this.Ycoordinate] = 1;</span>
+	                        }
+	                    }
+	                }
+<span class="pc bpc" id="L194" title="2 of 4 branches missed.">	                else if(!this.pen &amp;&amp; movepen) {</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">	                	for (int i = 1; i &lt;= distance; i++) {</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">	                        if (this.Xcoordinate - i &gt;= 0) {</span>
+<span class="fc" id="L197">	                            this.floor[this.Xcoordinate -i][this.Ycoordinate] = 0;</span>
+	                        }
+	                    }
+	                }
+	                else {
+<span class="nc" id="L202">	                	System.out.println(&quot;Please provide Distance within Floor Space Size&quot;);</span>
+<span class="nc" id="L203">						break;</span>
+					}
+<span class="fc" id="L205">	                this.Xcoordinate -= distance;	                </span>
+<span class="fc" id="L206">	                break;</span>
+	            case &quot;East&quot;:
+<span class="pc bpc" id="L208" title="1 of 4 branches missed.">	                if (this.pen &amp;&amp; movepen) {</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">	                    for (int i = 1; i &lt;= distance; i++) {</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">	                        if (this.Ycoordinate + i &lt; this.N) {</span>
+<span class="fc" id="L211">	                            this.floor[this.Xcoordinate][this.Ycoordinate + i] = 1;</span>
+	                        }
+	                    }
+	                }
+<span class="pc bpc" id="L215" title="2 of 4 branches missed.">	                else if(!this.pen &amp;&amp; movepen) {</span>
+	         
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		                    for (int i = 1; i &lt;= distance; i++) {</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		                        if (this.Ycoordinate + i &lt; this.N) {</span>
+<span class="fc" id="L219">		                            this.floor[this.Xcoordinate][this.Ycoordinate + i] = 0;</span>
+		                        }
+		                    }
+		                }
+	                
+	                else {
+<span class="nc" id="L225">	                	System.out.println(&quot;Please provide Distance within Floor Space Size&quot;);</span>
+<span class="nc" id="L226">						break;</span>
+					}
+<span class="fc" id="L228">	                this.Ycoordinate += distance;</span>
+<span class="fc" id="L229">	                break;</span>
+	            case &quot;South&quot;:
+<span class="pc bpc" id="L231" title="1 of 4 branches missed.">	                if (this.pen&amp;&amp; movepen) {</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">	                    for (int i = 1; i &lt;= distance; i++) {</span>
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">	                        if (this.Xcoordinate + i &lt; this.N) {</span>
+<span class="fc" id="L234">	                            this.floor[this.Xcoordinate + i][this.Ycoordinate] = 1;</span>
+	                        }
+	                    }
+	                }
+<span class="pc bpc" id="L238" title="2 of 4 branches missed.">	                else if (!this.pen&amp;&amp; movepen) {</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">	                    for (int i = 1; i &lt;= distance; i++) {</span>
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">	                        if (this.Xcoordinate + i &lt; this.N) {</span>
+<span class="fc" id="L241">	                            this.floor[this.Xcoordinate + i][this.Ycoordinate] = 0;</span>
+	                        }
+	                    }
+	                }
+	                else {
+<span class="nc" id="L246">	                	System.out.println(&quot;Please provide Distance within Floor Space Size&quot;);</span>
+<span class="nc" id="L247">						break;</span>
+					}
+<span class="fc" id="L249">	                this.Xcoordinate += distance;</span>
+<span class="fc" id="L250">	                break;</span>
+	            case &quot;West&quot;:
+<span class="pc bpc" id="L252" title="1 of 4 branches missed.">	                if (this.pen&amp;&amp; movepen) {</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">	                    for (int i = 1; i &lt;= distance; i++) {</span>
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">	                        if (this.Ycoordinate - i &gt;= 0) {</span>
+<span class="fc" id="L255">	                            this.floor[this.Xcoordinate][this.Ycoordinate - i] = 1;</span>
+	                        }
+	                    }
+	                }
+<span class="pc bpc" id="L259" title="2 of 4 branches missed.">	                else if (this.pen==false &amp;&amp; movepen) {</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">	                    for (int i = 1; i &lt;= distance; i++) {</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">	                        if (this.Ycoordinate - i &gt;= 0) {</span>
+<span class="fc" id="L262">	                            this.floor[this.Xcoordinate][this.Ycoordinate - i] = 0;</span>
+	                        }
+	                    }
+	                }
+	                else {
+<span class="nc" id="L267">	                	System.out.println(&quot;Please provide Distance within Floor Space Size&quot;);</span>
+<span class="nc" id="L268">						break;</span>
+					}
+<span class="fc" id="L270">	                this.Ycoordinate -= distance;</span>
+<span class="fc" id="L271">	                break;</span>
+	            default:
+<span class="nc" id="L273">	                System.out.println(&quot;Invalid direction&quot;);</span>
+	                break;
+	        }
+<span class="fc" id="L276">	    }</span>
+	
+	
+	
+	
+	
+	
+	
+
+	public String[][] print() {
+<span class="fc" id="L286">		String testmatrix[][] = new String[N][N]; // Defined matrix for testing purpose</span>
+//		System.out.println(n);
+<span class="fc bfc" id="L288" title="All 2 branches covered.">		for (int i = 0; i &lt; N; i++) {</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">			for (int j = 0; j &lt; N; j++) {</span>
+
+<span class="fc bfc" id="L291" title="All 2 branches covered.">				if (floor[i][j] == 1) {</span>
+<span class="fc" id="L292">					System.out.print(&quot;*&quot;);</span>
+<span class="fc" id="L293">					testmatrix[i][j] = (&quot;*&quot;);// setting value for testing</span>
+				}
+//               	else if  (floor[i][j] == 2) {
+//                    System.out.print(&quot;$&quot;);
+//                }
+				else {
+<span class="fc" id="L299">					System.out.print(&quot; &quot;);</span>
+<span class="fc" id="L300">					testmatrix[i][j] = (&quot; &quot;); // setting value for testing</span>
+				}
+
+			}
+<span class="fc" id="L304">			System.out.println();</span>
+		}
+<span class="fc" id="L306">		return testmatrix;</span>
+	}
+
+	public static void main(String[] args) {
+
+<span class="nc" id="L311">		System.out.println(&quot;[U|u] Pen up\r\n&quot; + &quot;[D|d] Pen down\r\n&quot; + &quot;[R|r] Turn right\r\n&quot; + &quot;[L|l] Turn left\r\n&quot;</span>
+				+ &quot;[M s|m s] Move forward s spaces (s is a non-negative integer)\r\n&quot;
+				+ &quot;[P|p] Print the N by N array and display the indices\r\n&quot;
+				+ &quot;[C|c] Print current position of the pen and whether it is up or down and its\r\n&quot;
+				+ &quot;facing direction\r\n&quot; + &quot;[Q|q] Stop the program\r\n&quot;
+				+ &quot;[I n|i n] Initialize the system: The values of the array floor are zeros and the robot\r\n&quot;
+				+ &quot;is back to [0, 0], pen up and facing north. n size of the array, an integer\r\n&quot;
+				+ &quot;greater than zero&quot;);
+
+
+<span class="nc" id="L321">			Project project = new Project();</span>
+
+<span class="nc" id="L323">			project.InputCommand();</span>
+
+
+
+<span class="nc" id="L327">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
